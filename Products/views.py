@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
+from django.views.generic import ListView, DetailView
 
 from .models import Product
 from .serializers import ProductSerializers
@@ -9,7 +10,7 @@ from .pagination import ProductPageNumberPagination
 
 
 class ProductListCreateAPIView(generics.ListAPIView):
-    queryset = Product.object.select_related('category', 'brand').all()
+    queryset = Product.objects.select_related('category', 'brand').all()
     serializer_class = ProductSerializers
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
@@ -17,9 +18,30 @@ class ProductListCreateAPIView(generics.ListAPIView):
     pagination_class = ProductPageNumberPagination
 
 
-class ProdutRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Product.object.select_related('category', 'brand').all()
+class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.select_related('category', 'brand').all()
     serializer_class = ProductSerializers
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
+class ProductListView(ListView):
+    model = Product
+    template_name = 'products/product-list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return (
+            Product.objects.filter(available=True).select_related('category', 'brand')
+        )
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/product-detail.html'
+    slug_field = 'slug' # slug_url_kwarg — «де взяти» значення вхідного параметра з адреси (ключ у kwargs), slug_field — «по якому» полю моделі це значення шукати.
+    slug_url_kwarg = 'slug'
+
+    def get_queryset(self):
+        return (
+            Product.objects.select_related('category', 'brand')
+        )

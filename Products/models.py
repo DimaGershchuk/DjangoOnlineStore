@@ -50,5 +50,9 @@ class Product(models.Model):
             models.Index(fields=['brand'])
         ]
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('product_detail', args=[self.slug])
+
     def __str__(self):
         return self.name
