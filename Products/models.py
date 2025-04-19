@@ -52,7 +52,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         from django.urls import reverse
-        return reverse('product_detail', args=[self.slug])
+        return reverse('product-detail', args=[self.slug])
 
     def __str__(self):
         return self.name

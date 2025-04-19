@@ -27,6 +27,7 @@ class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
 class ProductListView(ListView):
     model = Product
     template_name = 'products/product-list.html'
+    context_object_name = 'products'
     paginate_by = 10
 
     def get_queryset(self):
@@ -40,6 +41,7 @@ class ProductDetailView(DetailView):
     template_name = 'products/product-detail.html'
     slug_field = 'slug' # slug_url_kwarg — «де взяти» значення вхідного параметра з адреси (ключ у kwargs), slug_field — «по якому» полю моделі це значення шукати.
     slug_url_kwarg = 'slug'
+    context_object_name = 'product'
 
     def get_queryset(self):
         return (
