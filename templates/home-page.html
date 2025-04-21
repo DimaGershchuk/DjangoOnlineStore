@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="home-container">
+    <div class="hero-section">
+        <h1>Welcome to the Online Store!</h1>
+        <a href="{% url 'product-list' %}" class="cta-button">View products</a>
+    </div>
+    <div class="info-section">
+        <h2>Aboout us</h2>
+    </div>
+</div>
+{% endblock %}

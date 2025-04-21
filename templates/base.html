@@ -11,8 +11,16 @@
 </head>
 <body>
     <header>
-        <nav>
-        </nav>
+        <div class = "header-content">
+            <h1>Nice to see you again!</h1>
+            <nav>
+                <ul class = "nav-links">
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'product-list' %}">Catalog</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
     <main>
         {% block content %}
