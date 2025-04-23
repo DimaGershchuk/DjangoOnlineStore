@@ -3,6 +3,12 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from Products.models import Product
 from .models import CartItem, WishList
+from .serializers import CartItemSerializer, WishListItemSerializer
+from rest_framework import generics, status, permissions
+from rest_framework.response import Response
+from .models import CartItem, WishList
+from .serializers import CartItemSerializer, WishListItemSerializer
+from Products.models import Product
 
 
 class CartDetailView(LoginRequiredMixin, View):
@@ -50,3 +56,43 @@ class WishListToggleView(LoginRequiredMixin, View):
         return redirect('wishlist-detail')
 
 
+class CartItemListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return CartItem.objects.filter(cart = self.request.user.cart)
+
+    def perform_create(self, serializer):
+        serializer.save(cart=self.request.user.cart)
+
+
+class CartItemDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_url_kwarg = 'item_id'
+
+    def get_queryset(self):
+        return CartItem.objects.filter(cart=self.request.user.cart)
+
+
+class WishListRetrieveAPIView(generics.RetrieveAPIView):
+    serializer_class = WishListItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.wishlist
+
+
+class WishListToggleAPIView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, product_id):
+        wishlist = request.user.wishlist
+        product = generics.get_object_or_404(Product, pk=product_id)
+        if product in wishlist.products.all():
+            wishlist.products.remove(product)
+            return Response({'status': 'removed'}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            wishlist.products.add(product)
+            return Response({'status': 'added'}, status=status.HTTP_201_CREATED)
