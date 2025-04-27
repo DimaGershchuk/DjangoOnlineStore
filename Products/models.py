@@ -9,9 +9,9 @@ class Category(models.Model):
     image = models.ImageField(upload_to='images')
     image_thumbnail = ImageSpecField(
         source='image',
-        processors=[ResizeToFill(250, 250)],
+        processors=[ResizeToFill(550, 350)],
         format='JPEG',
-        options={'quality': 85}
+        options={'quality': 95}
     )
 
     class Meta:
@@ -39,9 +39,9 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images')
     image_thumbnail = ImageSpecField(
         source='image',
-        processors=[ResizeToFill(250, 250)],
+        processors=[ResizeToFill(650, 450)],
         format='JPEG',
-        options={'quality': 85}
+        options={'quality': 95}
     )
 
     average_rating = models.FloatField(null=True, blank=True)
