@@ -36,9 +36,16 @@ class ProductListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return (
-            Product.objects.filter(available=True).select_related('category', 'brand')
-        )
+        qs = super().get_queryset().select_related('category', 'brand')
+        slug = self.request.GET.get('category')
+        if slug:
+            qs = qs.filter(category__slug=slug)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['categories'] = Category.objects.all()
+        return ctx
 
 
 class ProductDetailView(DetailView):
