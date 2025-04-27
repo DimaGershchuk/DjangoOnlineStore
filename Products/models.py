@@ -6,6 +6,13 @@ from imagekit.processors import ResizeToFill
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
+    image = models.ImageField(upload_to='images')
+    image_thumbnail = ImageSpecField(
+        source='image',
+        processors=[ResizeToFill(250, 250)],
+        format='JPEG',
+        options={'quality': 85}
+    )
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -34,7 +41,7 @@ class Product(models.Model):
         source='image',
         processors=[ResizeToFill(250, 250)],
         format='JPEG',
-        options={'quality': 75}
+        options={'quality': 85}
     )
 
     average_rating = models.FloatField(null=True, blank=True)

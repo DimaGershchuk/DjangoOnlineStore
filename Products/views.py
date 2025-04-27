@@ -3,10 +3,15 @@ from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from django.views.generic import ListView, DetailView
 
-from .models import Product
+from .models import Product, Category
 from .serializers import ProductSerializers
 from .filters import ProductFilter
 from .pagination import ProductPageNumberPagination
+
+
+def home_view(request):
+    categories = Category.objects.all()
+    return render(request, 'home-page.html', {'categories': categories})
 
 
 class ProductListCreateAPIView(generics.ListAPIView):

@@ -7,11 +7,14 @@ from django.views.generic import CreateView
 from rest_framework import viewsets, permissions, generics
 from rest_framework.authentication import TokenAuthentication
 from .models import CustomUser
+from Products.models import Category
 from .serializers import CustomUserSerializer, CustomUserCreateSerializer
 from rest_framework.permissions import IsAuthenticated
 
+
 def home_view(request):
-    return render(request, 'home-page.html')
+    categories = Category.objects.all()
+    return render(request, 'home-page.html', {'categories': categories})
 
 
 class RegisterUser(CreateView):

@@ -58,7 +58,7 @@ class WishListToggleView(LoginRequiredMixin, View):
 
 class CartItemListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = CartItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         return CartItem.objects.filter(cart = self.request.user.cart)
@@ -69,7 +69,7 @@ class CartItemListCreateAPIView(generics.ListCreateAPIView):
 
 class CartItemDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CartItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     lookup_url_kwarg = 'item_id'
 
     def get_queryset(self):
@@ -78,14 +78,14 @@ class CartItemDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 class WishListRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = WishListItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_object(self):
         return self.request.user.wishlist
 
 
 class WishListToggleAPIView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request, product_id):
         wishlist = request.user.wishlist

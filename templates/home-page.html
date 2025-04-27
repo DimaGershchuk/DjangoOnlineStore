@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="home-container">
+  <div class="home-container">
     <div class="hero-section">
-        <h1>Welcome to the Online Store!</h1>
-        <a href="{% url 'product-list' %}" class="cta-button">View products</a>
+      <h1>Welcome to the Online Store!</h1>
     </div>
-    <div class="info-section">
-        <h2>Aboout us</h2>
-    </div>
-</div>
+
+    <section class="category-grid">
+      <h2>Shop by Category</h2>
+      <div class="grid">
+        {% for cat in categories %}
+          <div class="category-card">
+            <a href="{% url 'product-list' %}?category={{ cat.slug }}">
+              <img src="{{ cat.image_thumbnail.url }}" alt="{{ cat.name }}">
+              <span class="label">{{ cat.name }}</span>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
 {% endblock %}
