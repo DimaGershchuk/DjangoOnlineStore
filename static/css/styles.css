@@ -114,7 +114,7 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
   padding: 0 1rem;
@@ -173,9 +173,10 @@
 
 /* Styles for detail product page*/
 
-/* Контейнер детальної сторінки */
+
 .product-detail {
   max-width: 1200px;
+  position: relative;
   margin: 2rem auto;
   padding: 1rem;
   display: grid;
@@ -186,16 +187,23 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Заголовок назви товару */
+.product-detail .product-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
 .product-detail h1 {
-  grid-column: 1 / -1;  /* заголовок на всю ширину */
+  grid-column: 1 / -1;
   font-size: 2rem;
   margin-bottom: 1rem;
   color: #222;
   text-align: center;
 }
 
-/* Блок із зображенням */
 .product-detail .images {
   display: flex;
   align-items: center;
@@ -206,11 +214,8 @@
   max-width: 100%;
   border-radius: 6px;
   object-fit: cover;
-  /* при потребі фіксована висота:
-     height: 400px; */
 }
 
-/* Інформаційний блок справа */
 .product-detail .info {
   display: flex;
   flex-direction: column;
@@ -218,14 +223,12 @@
   gap: 1rem;
 }
 
-/* Стилі для тексту інфо */
 .product-detail .info p {
   font-size: 1.1rem;
   color: #444;
   line-height: 1.5;
 }
 
-/* Ціна виділяється окремим кольором */
 .product-detail .info p:first-of-type {
   font-size: 1.5rem;
   font-weight: bold;
@@ -233,7 +236,6 @@
   margin-bottom: 1rem;
 }
 
-/* Кнопка додати в кошик (якщо потрібна) */
 .product-detail .info .btn-add {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -252,3 +254,96 @@
   transform: translateY(-2px);
 }
 
+
+/*5. Styles for register form*/
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+}
+
+.register-form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 2rem;
+  max-width: 600px;
+  width: 80%;
+}
+
+/* Заголовок */
+.register-form .form-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  text-align: center;
+  color: #333;
+}
+
+.register-form form {
+  padding: 0 1.5rem;
+}
+
+/* Одиночний блок поля */
+.register-form .form-group {
+  margin-bottom: 1rem;
+}
+
+/* Стиль міток */
+.register-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Поля вводу */
+.register-form .form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.register-form .form-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.register-btn {
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  margin-top: 0.5rem;
+}
+
+.register-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.register-form .form-footer {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.register-form .form-footer a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-form .form-footer a:hover {
+  text-decoration: underline;
+}

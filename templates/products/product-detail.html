@@ -5,6 +5,19 @@
 {%block content%}
 
 <div class = 'product-detail'>
+    <div class = 'product-actions'>
+        <form action="{% url 'cart-add' product.id %}" method="post" style="display:inline">
+            {% csrf_token %}
+        <button type="submit" class="icon-button" title="Add to cart">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+     </svg></a>
+
+    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+    </svg></a>
+    </div>
+
     <h1>{{product.name}}</h1>
     <div class="images">
         <img src="{{product.image_thumbnail.url}}" alt="{{product.name}}">
@@ -14,6 +27,7 @@
         <p>Category: {{ product.category.name }}</p>
         <p>Brand: {{ product.brand.name }}</p>
         <p>Description: {{ product.description }}</p>
+
     </div>
 </div>
 
