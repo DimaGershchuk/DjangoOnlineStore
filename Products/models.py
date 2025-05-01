@@ -39,7 +39,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images')
     image_thumbnail = ImageSpecField(
         source='image',
-        processors=[ResizeToFill(650, 450)],
+        processors=[ResizeToFill(350, 250)],
         format='JPEG',
         options={'quality': 95}
     )

@@ -1,13 +1,26 @@
 {% extends 'base.html' %}
-
 {% block title %}Authorisation{% endblock %}
 
 {% block content %}
-    <h2>Authorisation</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="login_btn">Login</button>
+<div class="auth-wrapper">
+  <div class="login-form">
+    <h2 class="form-title">Login</h2>
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {{ field }}
+          {% for err in field.errors %}
+            <div class="error">{{ err }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="login-btn">Login</button>
     </form>
-
+    <p class="form-footer">
+      Don’t have an account? <a href="{% url 'register' %}">Register here</a>
+    </p>
+  </div>
+</div>
 {% endblock %}

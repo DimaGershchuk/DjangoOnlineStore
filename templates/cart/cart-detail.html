@@ -10,6 +10,7 @@
     <table class="cart-table">
       <thead>
         <tr>
+          <th>Image</th>
           <th>Product</th>
           <th>Price</th>
           <th>Quantity</th>
@@ -20,6 +21,7 @@
       <tbody>
         {% for item in cart.items.all %}
         <tr>
+          <td><img src="{{ item.product.image_thumbnail.url }}" alt="{{ item.product.name }}"></td>
           <td><a href="{% url 'product-detail' slug=item.product.slug %}">{{ item.product.name }}</a></td>
           <td>{{ item.product.price|floatformat:2 }}</td>
           <td>{{ item.quantity }}</td>
@@ -28,6 +30,8 @@
               {% csrf_token %}
               <button type="submit">+1</button>
             </form>
+            </td>
+          <td>
             <form action="{% url 'cart-remove' item.id %}" method="post" style="display:inline;">
               {% csrf_token %}
               <button type="submit">Remove</button>
@@ -37,6 +41,7 @@
         {% endfor %}
       </tbody>
     </table>
+            <button type="submit" class="checkout-order-btn">Proceed to checkout</button>
 
   {% else %}
     <p>Your cart is currently empty.</p>

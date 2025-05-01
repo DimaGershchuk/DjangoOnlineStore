@@ -14,21 +14,6 @@ def home_view(request):
     return render(request, 'home-page.html', {'categories': categories})
 
 
-class ProductListCreateAPIView(generics.ListAPIView):
-    queryset = Product.objects.select_related('category', 'brand').all()
-    serializer_class = ProductSerializers
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = ProductFilter
-    pagination_class = ProductPageNumberPagination
-
-
-class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.select_related('category', 'brand').all()
-    serializer_class = ProductSerializers
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-
 class ProductListView(ListView):
     model = Product
     template_name = 'products/product-list.html'
@@ -59,3 +44,21 @@ class ProductDetailView(DetailView):
         return (
             Product.objects.select_related('category', 'brand')
         )
+
+
+class ProductListCreateAPIView(generics.ListAPIView):
+    queryset = Product.objects.select_related('category', 'brand').all()
+    serializer_class = ProductSerializers
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductFilter
+    pagination_class = ProductPageNumberPagination
+
+
+class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.select_related('category', 'brand').all()
+    serializer_class = ProductSerializers
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+

@@ -46,10 +46,9 @@ class WishListDetailView(LoginRequiredMixin, View):
 
 class WishListToggleView(LoginRequiredMixin, View):
     def post(self, request, product_id):
-        wishlist = request.user.wishlist
+        wishlist, _ = WishList.objects.get_or_create(user=request.user)
         product = get_object_or_404(Product, id=product_id)
-
-        if product in wishlist.objects.all():
+        if product in wishlist.products.all():
             wishlist.products.remove(product)
         else:
             wishlist.products.add(product)

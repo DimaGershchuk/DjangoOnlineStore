@@ -26,7 +26,7 @@ class CartItem(models.Model):
 
 
 class WishList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wishlist')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='wishlist')
     products = models.ManyToManyField(Product, blank=True, related_name='wishlisted_by')
     created_at = models.DateTimeField(auto_now_add=True)
 

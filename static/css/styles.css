@@ -89,7 +89,7 @@
 .category-card img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 400px;
   object-fit: cover;
   transition: transform .3s;
 }
@@ -194,6 +194,49 @@
   display: flex;
   gap: 0.5rem;
   z-index: 10;
+}
+
+/* Загальні стилі для кнопок */
+.product-detail .add-to-cart,
+.product-detail .wishlist {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  text-decoration: none;
+}
+
+/* Кнопка «Додати в кошик» */
+.product-detail .add-to-cart {
+  background-color: #28a745; /* яскраво-зелений */
+  color: #fff;
+}
+.product-detail .add-to-cart:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+/* Кнопка «Улюблене» */
+.product-detail .wishlist {
+  background-color: #ffc107; /* жовтий */
+  color: #212529;
+}
+.product-detail .wishlist:hover {
+  background-color: #e0a800;
+  transform: translateY(-1px);
+}
+
+/* Якщо хочете, щоб іконка серця була в самій кнопці */
+.product-detail .wishlist svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
 }
 
 .product-detail h1 {
@@ -346,4 +389,315 @@
 
 .register-form .form-footer a:hover {
   text-decoration: underline;
+}
+
+/* ==== Login Form Styles ==== */
+
+/* Карточка форми */
+.login-form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Заголовок */
+.login-form .form-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  text-align: center;
+  color: #333;
+}
+
+/* Одиночний блок поля */
+.login-form .form-group {
+  margin-bottom: 1rem;
+}
+
+/* Стиль міток */
+.login-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Поля вводу */
+.login-form .form-group input {
+  width: 90%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.login-form .form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Повідомлення про помилку */
+.login-form .error {
+  color: #d9534f;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Кнопка “Login” */
+.login-btn {
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 0.5rem;
+}
+
+.login-btn:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+/* Футер з посиланням */
+.login-form .form-footer {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.login-form .form-footer a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-form .form-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* 6. Styles for wish list items*/
+
+/* Контейнер */
+.wishlist-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Заголовок */
+.wishlist-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Сітка товарів */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Картка товару */
+.wishlist-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.wishlist-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Зображення товару */
+.wishlist-card .card-image {
+  display: block;
+  width: 80%;
+  padding-top: 75%;
+  position: relative;
+}
+
+.wishlist-card .card-image img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Тіло картки */
+.wishlist-card .card-body {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wishlist-card .card-body h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+  color: #333;
+}
+
+.wishlist-card .card-body h2 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.wishlist-card .card-body .price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 0.75rem;
+}
+
+.btn-remove {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-remove:hover {
+  background-color: #c0392b;
+}
+
+.empty-msg {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.btn-continue {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.btn-continue:hover {
+  background-color: #2980b9;
+}
+
+/* ==== Shopping Cart Page Styles ==== */
+
+.cart-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Заголовок */
+.cart-container h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Таблиця */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+.cart-table thead {
+  background-color: #f7f7f7;
+}
+.cart-table th,
+.cart-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+.cart-table th {
+  font-weight: 600;
+  color: #555;
+}
+.cart-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* Посилання на продукт */
+.cart-table a {
+  color: #007bff;
+  text-decoration: none;
+}
+.cart-table a:hover {
+  text-decoration: underline;
+}
+
+/* Кнопки дій */
+.cart-table button {
+  padding: 0.4rem 0.8rem;
+  margin: 0 0.2rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.cart-table button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+.cart-table button:active {
+  transform: translateY(0);
+}
+
+/* Якщо кошик порожній */
+.cart-container p {
+  text-align: center;
+  color: #666;
+  margin: 2rem 0;
+  font-size: 1.1rem;
+}
+
+/* Кнопка «Continue Shopping» */
+.cart-container .btn-secondary {
+  display: inline-block;
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+.cart-container .btn-secondary:hover {
+  background-color: #007bff;
+  color: #fff;
 }
