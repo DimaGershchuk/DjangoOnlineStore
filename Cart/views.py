@@ -60,7 +60,7 @@ class CartItemListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        return CartItem.objects.filter(cart = self.request.user.cart)
+        return CartItem.objects.filter(cart=self.request.user.cart)
 
     def perform_create(self, serializer):
         serializer.save(cart=self.request.user.cart)

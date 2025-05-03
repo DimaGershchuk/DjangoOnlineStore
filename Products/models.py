@@ -1,6 +1,8 @@
 from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from django.core.validators import MinValueValidator, MaxValueValidator
+from Users.models import CustomUser
 
 
 class Category(models.Model):
@@ -9,7 +11,7 @@ class Category(models.Model):
     image = models.ImageField(upload_to='images')
     image_thumbnail = ImageSpecField(
         source='image',
-        processors=[ResizeToFill(550, 350)],
+        processors=[ResizeToFill(350, 350)],
         format='JPEG',
         options={'quality': 95}
     )
@@ -39,7 +41,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images')
     image_thumbnail = ImageSpecField(
         source='image',
-        processors=[ResizeToFill(350, 250)],
+        processors=[ResizeToFill(600, 450)],
         format='JPEG',
         options={'quality': 95}
     )
@@ -63,3 +65,19 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Review(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reviews')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} — {self.product.name}: {self.rating}★"
+

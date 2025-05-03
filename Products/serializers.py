@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Brand, Product
+from .models import Category, Brand, Product, Review
 
 
 class CategorySerializers(serializers.ModelSerializer):
@@ -61,3 +61,15 @@ class ProductSerializers(serializers.ModelSerializer):
             brand, _ = Brand.objects.get_or_create(**br_data)
             instance.brand = brand
         return super().update(instance, validated_data)
+
+
+class ReviewSerializers(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Review
+        fields = ['id', 'user', 'rating', 'comment', 'created_at', 'product']
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)
