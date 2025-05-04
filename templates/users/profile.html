@@ -10,6 +10,7 @@
   {% if user.tel_number %}<p><strong>Phone:</strong> {{ user.tel_number }}</p>{% endif %}
 
   <a href="{% url 'profile-edit' %}" class="btn">Edit Profile</a>
+  <a href="{% url 'password_change'%}" class="btn">Change password</a>
 
 </div>
 {% endblock %}
