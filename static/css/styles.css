@@ -1,4 +1,7 @@
 
+body{
+    font-family: 'Playfair Display', serif;
+}
 /* 1. Main header */
 .site-header {
   background: #fff;
@@ -130,6 +133,11 @@
   flex-direction: column;
 }
 
+.product-card a{
+    text-decoration: none;
+}
+
+
 .product-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -142,7 +150,7 @@
 }
 
 .product-card h2 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0.75rem 1rem 0.25rem;
   color: #333;
   flex: 1;
@@ -171,7 +179,7 @@
   background-color: #218838;
 }
 
-/* Styles for detail product page*/
+/* 5. Styles for detail product page*/
 
 
 .product-detail {
@@ -212,9 +220,8 @@
   text-decoration: none;
 }
 
-/* Кнопка «Додати в кошик» */
 .product-detail .add-to-cart {
-  background-color: #28a745; /* яскраво-зелений */
+  background-color: #28a745;
   color: #fff;
 }
 .product-detail .add-to-cart:hover {
@@ -222,9 +229,8 @@
   transform: translateY(-1px);
 }
 
-/* Кнопка «Улюблене» */
 .product-detail .wishlist {
-  background-color: #ffc107; /* жовтий */
+  background-color: #ffc107;
   color: #212529;
 }
 .product-detail .wishlist:hover {
@@ -232,7 +238,6 @@
   transform: translateY(-1px);
 }
 
-/* Якщо хочете, щоб іконка серця була в самій кнопці */
 .product-detail .wishlist svg {
   width: 1rem;
   height: 1rem;
@@ -298,7 +303,7 @@
 }
 
 
-/*5. Styles for register form*/
+/* 6. Styles for register form */
 
 .auth-wrapper {
   display: flex;
@@ -316,7 +321,6 @@
   width: 80%;
 }
 
-/* Заголовок */
 .register-form .form-title {
   margin-bottom: 1.5rem;
   font-size: 1.75rem;
@@ -328,12 +332,10 @@
   padding: 0 1.5rem;
 }
 
-/* Одиночний блок поля */
 .register-form .form-group {
   margin-bottom: 1rem;
 }
 
-/* Стиль міток */
 .register-form .form-group label {
   display: block;
   margin-bottom: 0.5rem;
@@ -341,7 +343,6 @@
   color: #555;
 }
 
-/* Поля вводу */
 .register-form .form-input {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -391,9 +392,8 @@
   text-decoration: underline;
 }
 
-/* ==== Login Form Styles ==== */
+/* 7. Login Form Styles */
 
-/* Карточка форми */
 .login-form {
   background-color: #ffffff;
   border-radius: 8px;
@@ -403,7 +403,6 @@
   width: 100%;
 }
 
-/* Заголовок */
 .login-form .form-title {
   margin-bottom: 1.5rem;
   font-size: 1.75rem;
@@ -411,12 +410,10 @@
   color: #333;
 }
 
-/* Одиночний блок поля */
 .login-form .form-group {
   margin-bottom: 1rem;
 }
 
-/* Стиль міток */
 .login-form .form-group label {
   display: block;
   margin-bottom: 0.5rem;
@@ -424,7 +421,6 @@
   color: #555;
 }
 
-/* Поля вводу */
 .login-form .form-group input {
   width: 90%;
   padding: 0.75rem 1rem;
@@ -439,14 +435,12 @@
   outline: none;
 }
 
-/* Повідомлення про помилку */
 .login-form .error {
   color: #d9534f;
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
 
-/* Кнопка “Login” */
 .login-btn {
   padding: 0.75rem;
   background-color: #007bff;
@@ -465,7 +459,6 @@
   transform: translateY(-1px);
 }
 
-/* Футер з посиланням */
 .login-form .form-footer {
   margin-top: 1rem;
   text-align: center;
@@ -484,16 +477,14 @@
 }
 
 
-/* 6. Styles for wish list items*/
+/* 8. Styles for wish list items*/
 
-/* Контейнер */
 .wishlist-container {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-/* Заголовок */
 .wishlist-container h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
@@ -501,14 +492,12 @@
   text-align: center;
 }
 
-/* Сітка товарів */
 .wishlist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
 }
 
-/* Картка товару */
 .wishlist-card {
   background: #fff;
   border-radius: 8px;
@@ -524,7 +513,6 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* Зображення товару */
 .wishlist-card .card-image {
   display: block;
   width: 80%;
@@ -540,7 +528,6 @@
   object-fit: cover;
 }
 
-/* Тіло картки */
 .wishlist-card .card-body {
   padding: 1rem;
   flex: 1;
@@ -606,7 +593,7 @@
   background-color: #2980b9;
 }
 
-/* ==== Shopping Cart Page Styles ==== */
+/* 9. Shopping Cart Page Styles */
 
 .cart-container {
   max-width: 900px;
@@ -617,7 +604,6 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* Заголовок */
 .cart-container h1 {
   margin-bottom: 1.5rem;
   font-size: 2rem;
@@ -625,7 +611,6 @@
   text-align: center;
 }
 
-/* Таблиця */
 .cart-table {
   width: 100%;
   border-collapse: collapse;
@@ -648,7 +633,6 @@
   background-color: #fafafa;
 }
 
-/* Посилання на продукт */
 .cart-table a {
   color: #007bff;
   text-decoration: none;
@@ -657,7 +641,6 @@
   text-decoration: underline;
 }
 
-/* Кнопки дій */
 .cart-table button {
   padding: 0.4rem 0.8rem;
   margin: 0 0.2rem;
@@ -677,7 +660,6 @@
   transform: translateY(0);
 }
 
-/* Якщо кошик порожній */
 .cart-container p {
   text-align: center;
   color: #666;
@@ -685,7 +667,6 @@
   font-size: 1.1rem;
 }
 
-/* Кнопка «Continue Shopping» */
 .cart-container .btn-secondary {
   display: inline-block;
   background-color: transparent;
@@ -700,4 +681,50 @@
 .cart-container .btn-secondary:hover {
   background-color: #007bff;
   color: #fff;
+}
+
+/* 10. Profile Styles */
+
+.profile-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333333;
+}
+
+.profile-card p {
+  font-size: 1rem;
+  color: #555555;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+.profile-card strong {
+  color: #222222;
+}
+
+.profile-card .btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.profile-card .btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }

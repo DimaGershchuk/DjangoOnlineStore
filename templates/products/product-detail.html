@@ -39,18 +39,35 @@
         <p>Description: {{ product.description }}</p>
     </div>
 
+    <section class="review-form">
+            {% if not user.is_authenticated%}
+                <p><a href="{% url 'login' %}?next={{ request.path }}">Login</a> for leaving review</p>
+            {% else %}
+        <div class="auth-wrapper">
+            <div class="register-form">
+                <h2 class="form-title">Leave your review here!</h2>
+                    <form method="post">
+                      {% csrf_token %}
+                      {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                              {% endif %}
+                              {% for err in field.errors %}
+                        <div class="error">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+                            {% endfor %}
+                      <button type="submit" class="btn-send-review">Submit review</button>
+                    </form>
+            </div>
+        </div>
+            {% endif %}
+    </section>
+
     <section class="product-reviews">
-
-        {% if not user.is_authenticated%}
-            <p><a href="{% url 'login' %}?next={{ request.path }}">Login</a> for leaving review</p>
-        {% else %}
-            <form method="post">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <button type="submit" class="btn-send-review">Submit review</button>
-            </form>
-        {% endif %}
-
         <h2>Customer reviews</h2>
         {% if reviews %}
             <ul class="review-list">
