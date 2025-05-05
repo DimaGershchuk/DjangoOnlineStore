@@ -81,3 +81,14 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.user.username} — {self.product.name}: {self.rating}★"
 
+
+class ProductManager(models.Manager):
+    def get_queryset(self):
+        return super(ProductManager, self).get_queryset().filter(available=True)
+
+
+class ProductProxy(Product):
+    objects = ProductManager()
+
+    class Meta:
+        proxy = True

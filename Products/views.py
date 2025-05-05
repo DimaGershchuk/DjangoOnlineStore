@@ -4,8 +4,8 @@ from django.views.generic.edit import FormMixin
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from django.views.generic import ListView, DetailView
-from django.db.models import  Q
-from .models import Product, Category
+from django.db.models import Q
+from .models import ProductProxy, Category
 from .serializers import ProductSerializers
 from .filters import ProductFilter
 from .pagination import ProductPageNumberPagination
@@ -18,7 +18,7 @@ def home_view(request):
 
 
 class ProductListView(ListView):
-    model = Product
+    model = ProductProxy
     template_name = 'products/product-list.html'
     context_object_name = 'products'
     paginate_by = 10
@@ -49,7 +49,7 @@ class ProductListView(ListView):
 
 
 class ProductDetailView(FormMixin, DetailView):
-    model = Product
+    model = ProductProxy
     template_name = 'products/product-detail.html'
     slug_field = 'slug' # slug_url_kwarg — «де взяти» значення вхідного параметра з адреси (ключ у kwargs), slug_field — «по якому» полю моделі це значення шукати.
     slug_url_kwarg = 'slug'
@@ -61,7 +61,7 @@ class ProductDetailView(FormMixin, DetailView):
 
     def get_queryset(self):
         return (
-            Product.objects.select_related('category', 'brand')
+            ProductProxy.objects.select_related('category', 'brand')
         )
 
     def get_context_data(self, **kwargs):
@@ -85,7 +85,7 @@ class ProductDetailView(FormMixin, DetailView):
 
 
 class ProductListCreateAPIView(generics.ListAPIView):
-    queryset = Product.objects.select_related('category', 'brand').all()
+    queryset = ProductProxy.objects.select_related('category', 'brand').all()
     serializer_class = ProductSerializers
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
@@ -94,6 +94,6 @@ class ProductListCreateAPIView(generics.ListAPIView):
 
 
 class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.select_related('category', 'brand').all()
+    queryset = ProductProxy.objects.select_related('category', 'brand').all()
     serializer_class = ProductSerializers
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
