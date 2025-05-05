@@ -4,13 +4,12 @@ from django.views.generic.edit import FormMixin
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from django.views.generic import ListView, DetailView
-
+from django.db.models import  Q
 from .models import Product, Category
 from .serializers import ProductSerializers
 from .filters import ProductFilter
 from .pagination import ProductPageNumberPagination
 from .forms import ReviewForm
-
 
 
 def home_view(request):
@@ -26,14 +25,26 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset().select_related('category', 'brand')
-        slug = self.request.GET.get('category')
+
+        slug = self.request.GET.get('category', '').strip()
+        q = self.request.GET.get('q',      '').strip()
+
         if slug:
             qs = qs.filter(category__slug=slug)
-        return qs
+
+        if q:
+            qs = qs.filter(
+                Q(name__icontains=q) |
+                Q(category__name__icontains=q) |
+                Q(brand__name__icontains=q)
+            )
+
+        return qs.distinct()
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['categories'] = Category.objects.all()
+        ctx['q'] = self.request.GET.get('q', '')
         return ctx
 
 
@@ -86,6 +97,3 @@ class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     queryset = Product.objects.select_related('category', 'brand').all()
     serializer_class = ProductSerializers
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-
-
