@@ -33,3 +33,20 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.product.name} - {self.quantity} (Order # {self.order.pk})"
 
+
+class ShippingAddress(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='shipping_address')
+    full_name = models.CharField(max_length=100)
+    address_line1 = models.CharField("Address line 1", max_length=255)
+    address_line2 = models.CharField("Address line 2", max_length=255, blank=True)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField("Postal / ZIP code", max_length=20)
+    country = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return f"Shipping for Order #{self.order.pk}"
+
+
+
+

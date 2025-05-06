@@ -3,7 +3,35 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from Cart.models import CartItem, Cart
 from django.views.generic import ListView, DetailView
-from .models import Order, OrderItem
+from .models import Order, OrderItem, ShippingAddress
+from django.contrib.auth.decorators import login_required
+from .forms import ShippingForm
+
+@login_required()
+def checkout(request):
+    order, created = Order.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart__user=request.user).select_related('product')
+
+    try:
+        address = order.shipping_address
+    except ShippingAddress.DoesNotExist:
+        address = None
+
+    if request.method == "POST":
+        form = ShippingForm(request.POST, instance=address)
+        if form.is_valid():
+            shipping = form.save(commit=False)
+            shipping.order = order
+            shipping.save()
+            return redirect('order-confirmation', order_id=order.pk)
+        else:
+            form = ShippingForm(instance=address)
+
+        return render(request, 'order/checkout.html', {
+            'cart_items': cart_items,
+            'order': order,
+            'form': form,
+        })
 
 
 class CheckoutView(LoginRequiredMixin, View):
