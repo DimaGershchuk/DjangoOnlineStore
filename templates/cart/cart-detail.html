@@ -41,7 +41,7 @@
         {% endfor %}
       </tbody>
     </table>
-            <button type="submit" class="checkout-order-btn">Proceed to checkout</button>
+            <a href="{% url 'checkout' %}" class="btn btn-secondary">Proceed to checkout</a>
 
   {% else %}
     <p>Your cart is currently empty.</p>

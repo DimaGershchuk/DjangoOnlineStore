@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+<div class="checkout-container">
+  <h1>Checkout order</h1>
+  {% if cart_items %}
+    <form method="post">
+      {% csrf_token %}
+      <table class="table">
+        <thead>
+          <tr><th>Item</th><th>Price</th><th>Quantity</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          {% for ci in cart_items %}
+            <tr>
+              <td><img src="{{ ci.product.image_thumbnail.url }}" alt="{{ item.product.name }}"></td>
+              <td>{{ ci.product.name }}</td>
+              <td>${{ ci.product.price }}</td>
+              <td>{{ ci.quantity }}</td>
+              <td>${{ ci.product.price }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-success">Confirm order</button>
+    </form>
+  {% else %}
+    <p>Cart empty.</p>
+  {% endif %}
+</div>
+{% endblock %}

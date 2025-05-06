@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('Products.urls')),
     path('users/', include('Users.urls')),
     path('cart/', include('Cart.urls')),
+    path('orders/', include('Orders.urls')),
 
     path('api-auth/', include("rest_framework.urls")),
     path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
