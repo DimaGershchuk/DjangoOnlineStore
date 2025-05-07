@@ -12,7 +12,6 @@ from Products.models import Product
 
 
 class CartDetailView(LoginRequiredMixin, View):
-
     def get(self, request):
         cart = request.user.cart
         return render(request, 'cart/cart-detail.html', {'cart': cart})

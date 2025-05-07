@@ -12,9 +12,9 @@
     <a href="{% url 'profile-edit' %}" class="btn">Edit Profile</a>
     <a href="{% url 'password_change'%}" class="btn">Change password</a>
 
-  </div>
 
-  <h2>Your orders!</h2>
+  </div>
+  <h2 class="order-section-title">Your orders</h2>
     {% if orders %}
       <ul class="order-list">
         {% for order in orders %}

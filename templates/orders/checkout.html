@@ -2,13 +2,12 @@
 {% block title %}Checkout{% endblock %}
 {% block content %}
 <div class="checkout-container">
-  <h1>Checkout order</h1>
   {% if cart_items %}
     <form method="post">
       {% csrf_token %}
-      <table class="table">
+      <table class="table-items">
         <thead>
-          <tr><th>Item</th><th>Price</th><th>Quantity</th><th>Total</th></tr>
+        <tr><th>Image</th><th>Item</th><th>Price</th><th>Quantity</th><th>Total</th></tr>
         </thead>
         <tbody>
           {% for ci in cart_items %}
@@ -35,9 +34,9 @@
             {% endfor %}
           </div>
         {% endfor %}
+        <button type="submit" class="confirm-btn">Confirm order</button>
       </div>
 
-      <button type="submit" class="btn btn-success">Confirm order</button>
     </form>
   {% else %}
     <p>Cart empty.</p>

@@ -758,3 +758,135 @@ h1{
   background-color: #0056b3;
   transform: translateY(-2px);
 }
+
+/* 11. Checkout page */
+
+.checkout-container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.checkout-container > form {
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+}
+
+.checkout-container .table-items {
+  width: 60%;              /* займає 1 частину простору */
+  border-collapse: collapse;
+  min-width: 0;             /* щоб flex-item зменшувався нижче початкового розміру */
+}
+
+.checkout-container .table-items th,
+.checkout-container .table-items td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.checkout-container .table-items thead {
+  background-color: #f4f4f4;
+}
+
+.checkout-container .table-items img {
+  width: 360px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.checkout-container .shipping-form {
+  width: 30%;          /* фіксована ширина 300px (можете змінити) */
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.checkout-container .shipping-form h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.checkout-container .shipping-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.checkout-container .shipping-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.checkout-container .shipping-form input,
+.checkout-container .shipping-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.checkout-container .shipping-form input:focus,
+.checkout-container .shipping-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.checkout-container .confirm-btn {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+
+.checkout-container .confirm-btn {
+  background-color: #218838;
+}
+
+/* 12. Profile, orders section */
+
+h2.order-section-title {
+  max-width: 600px;
+  margin: 2rem auto 1rem;
+  font-size: 1.5rem;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+/* Список замовлень */
+.order-list {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  list-style: none;
+  padding: 0;
+}
+
+/* Одиничне замовлення */
+.order-item {
+  background: #fafafa;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+/* Текст всередині замовлення */
+.order-item p {
+  margin: 0.25rem 0;
+  color: #444;
+  font-size: 1rem;
+}
+
+
