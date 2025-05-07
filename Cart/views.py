@@ -6,7 +6,7 @@ from .models import CartItem, WishList
 from .serializers import CartItemSerializer, WishListItemSerializer
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
-from .models import CartItem, WishList
+from .models import CartItem, WishList, Cart
 from .serializers import CartItemSerializer, WishListItemSerializer
 from Products.models import Product
 
@@ -20,7 +20,7 @@ class CartDetailView(LoginRequiredMixin, View):
 
 class CartAddItemView(LoginRequiredMixin, View):
     def post(self, request, product_id):
-        cart = request.user.cart
+        cart, _ = Cart.objects.get_or_create(user=request.user)
         product = get_object_or_404(Product, id=product_id)
         item, created = CartItem.objects.get_or_create(cart=cart, product=product)
         if not created:

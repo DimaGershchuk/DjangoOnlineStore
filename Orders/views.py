@@ -7,53 +7,61 @@ from .models import Order, OrderItem, ShippingAddress
 from django.contrib.auth.decorators import login_required
 from .forms import ShippingForm
 
-@login_required()
-def checkout(request):
-    order, created = Order.objects.get_or_create(user=request.user)
-    cart_items = CartItem.objects.filter(cart__user=request.user).select_related('product')
-
-    try:
-        address = order.shipping_address
-    except ShippingAddress.DoesNotExist:
-        address = None
-
-    if request.method == "POST":
-        form = ShippingForm(request.POST, instance=address)
-        if form.is_valid():
-            shipping = form.save(commit=False)
-            shipping.order = order
-            shipping.save()
-            return redirect('order-confirmation', order_id=order.pk)
-        else:
-            form = ShippingForm(instance=address)
-
-        return render(request, 'order/checkout.html', {
-            'cart_items': cart_items,
-            'order': order,
-            'form': form,
-        })
-
 
 class CheckoutView(LoginRequiredMixin, View):
-    def get(self, request):
-        cart = request.user.cart
-        items = cart.items.select_related('product').all()
+    template_name = 'orders/checkout.html'
+    form_class = ShippingForm
 
-        return render(request, 'orders/checkout.html', {'cart_items': items})
+    def get(self, request):
+        # 1) Підтягуємо товари з кошика
+        cart_items = CartItem.objects.filter(cart__user=request.user).select_related('product')
+
+        # 2) Підтягуємо існуючу адресу (якщо була) або None
+        order, _ = Order.objects.get_or_create(user=request.user)
+        try:
+            address = order.shipping_address
+        except ShippingAddress.DoesNotExist:
+            address = None
+
+        form = self.form_class(instance=address)
+        return render(request, self.template_name, {
+            'cart_items': cart_items,
+            'form': form,
+            'order': order,
+        })
 
     def post(self, request):
-        user = request.user
-        cart = user.cart
-        items = cart.items.select_related('product').all()
-
-        if not items:
+        cart_items = CartItem.objects.filter(cart__user=request.user).select_related('product')
+        if not cart_items.exists():
             return redirect('cart-detail')
 
-        order = Order.objects.create(user=user)
+        # знову отримаємо або створимо Order
+        order, _ = Order.objects.get_or_create(user=request.user)
 
+        # обробляємо адресу
+        try:
+            address = order.shipping_address
+        except ShippingAddress.DoesNotExist:
+            address = None
+
+        form = self.form_class(request.POST, instance=address)
+        if not form.is_valid():
+            # якщо форма невалідна, просто рендеримо обратно з помилками
+            return render(request, self.template_name, {
+                'cart_items': cart_items,
+                'form': form,
+                'order': order,
+            })
+
+        shipping = form.save(commit=False)
+        shipping.order = order
+        shipping.save()
+
+        # створюємо OrderItem’и з поточними товарами
         total = 0
-
-        for ci in items:
+        # очищаємо попередні OrderItem-и, якщо треба:
+        order.items.all().delete()
+        for ci in cart_items:
             OrderItem.objects.create(
                 order=order,
                 product=ci.product,
@@ -62,10 +70,13 @@ class CheckoutView(LoginRequiredMixin, View):
             )
             total += ci.product.price * ci.quantity
 
+        # зберігаємо загальну суму
         order.total_price = total
         order.save(update_fields=['total_price'])
 
-        cart.items.all().delete()
+        # тепер чистимо кошик
+        cart_items.delete()
+
         return redirect('order-success', pk=order.pk)
 
 

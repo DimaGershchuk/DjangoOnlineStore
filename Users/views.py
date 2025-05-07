@@ -10,6 +10,7 @@ from .models import CustomUser
 from Products.models import Category
 from .serializers import CustomUserSerializer, CustomUserCreateSerializer
 from rest_framework.permissions import IsAuthenticated
+from Orders.models import Order
 
 
 def home_view(request):
@@ -50,6 +51,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['user'] = self.request.user
+        ctx['orders'] = Order.objects.filter(user=self.request.user).order_by('-created_at')
         return ctx
 
 
