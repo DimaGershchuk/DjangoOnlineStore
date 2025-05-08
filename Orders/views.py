@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework import generics, permissions
+
 from Cart.models import CartItem, Cart
 from django.views.generic import ListView, DetailView
 from .models import Order, OrderItem, ShippingAddress
 from django.contrib.auth.decorators import login_required
 from .forms import ShippingForm
+from .serializers import OrderSerializer
 
 
 class CheckoutView(LoginRequiredMixin, View):
@@ -86,18 +89,19 @@ class OrderSuccessView(LoginRequiredMixin, View):
         return render(request, 'orders/order_success.html', {'order': order})
 
 
-#class OrderListView(LoginRequiredMixin, ListView):
-    #model = Order
-    #context_object_name = 'orders'
-    #template_name = 'orders/order_list.html'
+class OrderListCreateView(generics.ListCreateAPIView):
+    queryset = Order.objects.all().prefetch_related('items__product')
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    #def get_queryset(self):
-        #return Order.objects.filter(user = self.request.user).order_by('-create_at')
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
-#class OrderDetailView(LoginRequiredMixin, DetailView):
-    #model = Order
-    #context_object_name = 'order'
-    #template_name = 'orders/order_detail.html'
+class OrderRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all().prefetch_related('items__product')
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 

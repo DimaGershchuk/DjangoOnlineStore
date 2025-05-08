@@ -5,8 +5,8 @@ from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
-from .models import ProductProxy, Category
-from .serializers import ProductSerializers
+from .models import ProductProxy, Category, Review
+from .serializers import ProductSerializers, ReviewSerializers
 from .filters import ProductFilter
 from .pagination import ProductPageNumberPagination
 from .forms import ReviewForm
@@ -84,10 +84,10 @@ class ProductDetailView(FormMixin, DetailView):
         return self.form_invalid(form)
 
 
-class ProductListCreateAPIView(generics.ListAPIView):
+class ProductListAPIView(generics.ListAPIView):
     queryset = ProductProxy.objects.select_related('category', 'brand').all()
     serializer_class = ProductSerializers
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
     pagination_class = ProductPageNumberPagination
@@ -96,4 +96,17 @@ class ProductListCreateAPIView(generics.ListAPIView):
 class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ProductProxy.objects.select_related('category', 'brand').all()
     serializer_class = ProductSerializers
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ReviewListCreateApiView(generics.ListCreateAPIView):
+    serializer_class = ReviewSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        product_pk = self.kwargs['product_pk']
+        return Review.objects.filter(product_id=product_pk).select_related('user')
+
+    def perform_create(self, serializer):
+        product_pk = self.kwargs['product_pk']
+        serializer.save(user=self.request.user, product_id=product_pk)
