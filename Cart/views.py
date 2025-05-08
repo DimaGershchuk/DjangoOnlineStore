@@ -1,20 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from Products.models import Product
-from .models import CartItem, WishList
-from .serializers import CartItemSerializer, WishListItemSerializer
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from .models import CartItem, WishList, Cart
 from .serializers import CartItemSerializer, WishListItemSerializer
 from Products.models import Product
+from django.db.models import Prefetch
 
 
 class CartDetailView(LoginRequiredMixin, View):
     def get(self, request):
-        cart = request.user.cart
-        return render(request, 'cart/cart-detail.html', {'cart': cart})
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        cart_items = cart.items.select_related('product').all() # Витягую всі товари, які в корзині
+        return render(request, 'cart/cart-detail.html', {'cart': cart, 'cart_items': cart_items})
 
 
 class CartAddItemView(LoginRequiredMixin, View):
@@ -39,8 +38,9 @@ class CartRemoveItemView(LoginRequiredMixin, View):
 
 class WishListDetailView(LoginRequiredMixin, View):
     def get(self, request):
-        wishlist = request.user.wishlist
-        return render(request, 'cart/wishlist-detail.html', {'wishlist': wishlist})
+        wishlist, _ = WishList.objects.prefetch_related(Prefetch('products', queryset=Product.objects.select_related('category', 'brand'))).get_or_create(user=request.user) # Витягую всі товари для wishlist одни запитом через prefetch, тому що зв`язок M2M
+        products = wishlist.products.all()
+        return render(request, 'cart/wishlist-detail.html', {'wishlist': wishlist, 'products': products})
 
 
 class WishListToggleView(LoginRequiredMixin, View):

@@ -8,7 +8,7 @@
 
   {% if wishlist.products.all %}
     <div class="wishlist-grid">
-      {% for product in wishlist.products.all %}
+      {% for product in products %}
         <div class="wishlist-card">
           <a href="{% url 'product-detail' slug=product.slug %}" class="card-image">
             <img src="{{ product.image_thumbnail.url }}" alt="{{ product.name }}">

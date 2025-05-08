@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in cart.items.all %}
+        {% for item in cart_items %}
         <tr>
           <td><img src="{{ item.product.image_thumbnail.url }}" alt="{{ item.product.name }}"></td>
           <td><a href="{% url 'product-detail' slug=item.product.slug %}">{{ item.product.name }}</a></td>

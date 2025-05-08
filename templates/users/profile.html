@@ -14,18 +14,29 @@
 
 
   </div>
-  <h2 class="order-section-title">Your orders</h2>
-    {% if orders %}
-      <ul class="order-list">
-        {% for order in orders %}
-          <li class="order-item">
-            <p>Order# {{order.pk}} - placed on {{order.created_at}}</p>
-            <p>Total price: ${{order.total_price}}</p>
-
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>You have no past orders.</p>
-    {% endif %}
+   <h2>Your Orders</h2>
+  {% if orders %}
+    {% for order in orders %}
+      <div class="order-block">
+        <h3>Order #{{ order.pk }} — {{ order.created_at|date:"SHORT_DATETIME_FORMAT" }}</h3>
+        <p><strong>Total:</strong> ${{ order.total_price }}</p>
+        <table class="order-items-table">
+          <thead>
+            <tr><th>Product</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>
+          </thead>
+          <tbody>
+            {% for item in order.items_prefetched %}
+              <tr>
+                <td><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.price }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>You have no past orders.</p>
+  {% endif %}
 {% endblock %}

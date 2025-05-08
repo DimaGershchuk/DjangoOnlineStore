@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.db.models import Prefetch
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from .forms import CustomUserCreationForm, LoginUserForm, ProfileForm, PasswordChangeForm
@@ -10,7 +11,7 @@ from .models import CustomUser
 from Products.models import Category
 from .serializers import CustomUserSerializer, CustomUserCreateSerializer
 from rest_framework.permissions import IsAuthenticated
-from Orders.models import Order
+from Orders.models import Order, OrderItem
 
 
 def home_view(request):
@@ -50,8 +51,9 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+        user = self.request.user
         ctx['user'] = self.request.user
-        ctx['orders'] = Order.objects.filter(user=self.request.user).order_by('-created_at')
+        ctx['orders'] = Order.objects.filter(user=user).prefetch_related(Prefetch('items', queryset=OrderItem.objects.select_related('product'), to_attr='items_prefetched')).order_by('-created_at')
         return ctx
 
 
