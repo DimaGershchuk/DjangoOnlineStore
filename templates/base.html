@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <body>
+    <div class="page-wrapper">
         <header class="site-header">
           <div class="inner">
             <div class="header-left">
@@ -27,7 +28,7 @@
 
               <div class="header-right">
                   <form class="d-flex" role="search" method="get" action="{% url 'product-list' %}">
-                  <input class="form-control me-2" type="search" name="q" value="{{q}}" placeholder="Search" aria-label="Search" 🔍>
+                    <input class="form-control me-2" type="search" name="q" value="{{q}}" placeholder="Search" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
 
@@ -43,12 +44,42 @@
           </nav>
         </header>
 
-    <main>
+    <main class="page-content">
         {% block content %}
         {% endblock %}
     </main>
 
+        <footer class="site-footer">
+              <div class="footer-container">
+                <div class="footer-col">
+                  <h4>About Us</h4>
+                  <p>We’re a passionate team bringing you the best products in fashion and lifestyle. Quality guaranteed!</p>
+                </div>
+                <div class="footer-col">
+                  <h4>Quick Links</h4>
+                  <ul>
+                    <li><a href="{% url 'product-list' %}">Catalog</a></li>
+                    <li><a href="{% url 'home-page' %}">Home</a></li>
+                    <li><a href="{% url 'profile' %}">My Account</a></li>
+                  </ul>
+                </div>
+                <div class="footer-col">
+                  <h4>Contact</h4>
+                  <p>Email: support@onlinestore.com</p>
+                  <p>Phone: +1 (800) 123-4567</p>
+                  <div class="social-links">
+                    <a href="#"><img src="{% static 'icons/facebook.svg' %}" alt="Facebook"></a>
+                    <a href="#"><img src="{% static 'icons/instagram.svg' %}" alt="Instagram"></a>
+                    <a href="#"><img src="{% static 'icons/twitter.svg' %}" alt="Twitter"></a>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-bottom">
+                <p>&copy; 2025 Online Store. All rights reserved.</p>
+              </div>
+        </footer>
 
 
+    </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>

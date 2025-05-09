@@ -14,15 +14,16 @@
 
 
   </div>
-   <h2>Your Orders</h2>
+
   {% if orders %}
     {% for order in orders %}
       <div class="order-block">
+        <h2>Your Orders</h2>
         <h3>Order #{{ order.pk }} — {{ order.created_at|date:"SHORT_DATETIME_FORMAT" }}</h3>
         <p><strong>Total:</strong> ${{ order.total_price }}</p>
         <table class="order-items-table">
           <thead>
-            <tr><th>Product</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>
+            <tr><th>Product</th><th>Quantity</th><th>Price</th></tr>
           </thead>
           <tbody>
             {% for item in order.items_prefetched %}

@@ -1,6 +1,18 @@
 
 body{
     font-family: 'Playfair Display', serif;
+    height: 100%;
+    margin: 0;
+}
+
+.page-wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-content{
+    flex: 1;
 }
 
 h1{
@@ -61,6 +73,7 @@ h1{
 .navbar-main .active {
   color: #e60023;
 }
+
 
 /*2. Slider in main page*/
 
@@ -488,7 +501,7 @@ h1{
 }
 
 .login-btn:hover {
-  background-color: #218838;
+  background-color: #0056b3;
   transform: translateY(-1px);
 }
 
@@ -709,8 +722,8 @@ h1{
   transition: background-color 0.2s, color 0.2s;
 }
 .cart-container .btn-secondary:hover {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #0056b3;
+  transform: translateY(-1px);
 }
 
 /* 10. Profile Styles */
@@ -765,6 +778,7 @@ h1{
   display: flex;
   gap: 2rem;
   padding: 2rem;
+  margin: auto;
 }
 
 .checkout-container > form {
@@ -774,6 +788,7 @@ h1{
 }
 
 .checkout-container .table-items {
+  margin: auto;
   width: 60%;              /* займає 1 частину простору */
   border-collapse: collapse;
   min-width: 0;             /* щоб flex-item зменшувався нижче початкового розміру */
@@ -801,6 +816,7 @@ h1{
   width: 30%;          /* фіксована ширина 300px (можете змінити) */
   background: #fff;
   padding: 1.5rem;
+  margin: auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
@@ -849,44 +865,184 @@ h1{
   transition: background-color .2s ease;
 }
 
+/* 12. Order Success Page --- */
+.order-success {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.order-success h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.order-success p {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.order-success .btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.order-success .btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
 .checkout-container .confirm-btn {
   background-color: #218838;
 }
 
-/* 12. Profile, orders section */
+/* 13. Profile, orders section */
 
-h2.order-section-title {
-  max-width: 600px;
-  margin: 2rem auto 1rem;
-  font-size: 1.5rem;
-  color: #333;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 0.5rem;
+.order-block {
+  background: #fff;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  max-width: 50%;
+  margin: auto;
 }
 
-/* Список замовлень */
-.order-list {
-  max-width: 600px;
-  margin: 0 auto 2rem;
+.order-block h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #222;
+  text-align: center;
+}
+
+.order-block h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  color: #222;
+  text-align: center;
+}
+.order-block p {
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.order-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.order-items-table th,
+.order-items-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+.order-items-table th {
+  background: #f0f0f0;
+  text-align: left;
+  color: #444;
+  font-weight: 600;
+}
+.order-items-table td {
+  color: #555;
+}
+.order-items-table a {
+  color: #007bff;
+  text-decoration: none;
+}
+.order-items-table a:hover {
+  text-decoration: underline;
+}
+
+/* --- Footer --- */
+.site-footer {
+  background-color: #222;
+  color: #ccc;
+  padding: 3rem 1rem 1rem;
+  font-size: 0.9rem;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #444;
+}
+
+.footer-col h4 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.footer-col p,
+.footer-col li,
+.footer-col a {
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.footer-col ul {
   list-style: none;
   padding: 0;
 }
 
-/* Одиничне замовлення */
-.order-item {
-  background: #fafafa;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-left: 4px solid #007bff;
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+.footer-col ul li {
+  margin-bottom: 0.5rem;
 }
 
-/* Текст всередині замовлення */
-.order-item p {
-  margin: 0.25rem 0;
-  color: #444;
-  font-size: 1rem;
+.footer-col ul li a {
+  text-decoration: none;
+  transition: color 0.2s;
 }
+
+.footer-col ul li a:hover {
+  color: #fff;
+}
+
+.social-links {
+  margin-top: 1rem;
+}
+
+.social-links a {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.social-links img {
+  width: 24px;
+  height: 24px;
+  filter: invert(80%);
+  transition: filter 0.2s;
+}
+
+.social-links img:hover {
+  filter: invert(100%);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 1rem 0;
+  color: #777;
+  font-size: 0.8rem;
+}
+
 
 
