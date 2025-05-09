@@ -20,7 +20,7 @@ class CheckoutView(LoginRequiredMixin, View):
         cart_items = CartItem.objects.filter(cart__user=request.user).select_related('product')
 
         # 2) Підтягуємо існуючу адресу (якщо була) або None
-        order, _ = Order.objects.get_or_create(user=request.user)
+        order, _ = Order.objects.get_or_create(user=request.user, status='PENDING')
         try:
             address = order.shipping_address
         except ShippingAddress.DoesNotExist:
@@ -39,7 +39,7 @@ class CheckoutView(LoginRequiredMixin, View):
             return redirect('cart-detail')
 
         # знову отримаємо або створимо Order
-        order, _ = Order.objects.get_or_create(user=request.user)
+        order, _ = Order.objects.get_or_create(user=request.user, status='PENDING')
 
         # обробляємо адресу
         try:

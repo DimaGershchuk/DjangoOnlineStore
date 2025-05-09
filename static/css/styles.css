@@ -9,6 +9,7 @@ body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-top: 110px;
 }
 
 .page-content{
@@ -22,8 +23,12 @@ h1{
 .site-header {
   background: #fff;
   border-bottom: 2px solid #ddd;
-  position: sticky;
-  top: 1.2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 110px;        /* як приклад */
+  z-index: 1000;
 }
 
 .site-header .inner {
@@ -155,6 +160,19 @@ h1{
 }
 
 /*4. Styles for products list*/
+
+.catalog-section {
+  max-width: 1300px;   /* або скільки вам потрібно */
+  margin: 0 auto;      /* центр по горизонталі */
+  padding: 2rem 1rem;  /* зверху/знизу 2rem, з боків 1rem */
+}
+
+.catalog-heading {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
 
 .product-grid {
   display: grid;

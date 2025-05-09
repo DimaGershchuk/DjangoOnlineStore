@@ -4,17 +4,19 @@
 
 {%block content%}
 
-<h1>Catalog</h1>
-<div class = 'product-grid'>
-    {% for product in products %}
-        <div class = "product-card">
-            <a href="{{product.get_absolute_url}}">
-                <img src="{{product.image_thumbnail.url}}" alt="{{product.name}}">
-                <h2>{{product.name}}</h2>
-            </a>
-            <p> ${{product.price}} </p>
-        </div>
-    {% endfor %}
-</div>
+<section class="catalog-section">
+    <h1 class="catalog-heading">Catalog</h1>
+    <div class = 'product-grid'>
+        {% for product in products %}
+            <div class = "product-card">
+                <a href="{{product.get_absolute_url}}">
+                    <img src="{{product.image_thumbnail.url}}" alt="{{product.name}}">
+                    <h2>{{product.name}}</h2>
+                </a>
+                <p> ${{product.price}} </p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
 
 {% endblock %}
