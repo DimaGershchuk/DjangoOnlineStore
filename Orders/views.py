@@ -2,13 +2,35 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics, permissions
-
 from Cart.models import CartItem, Cart
 from django.views.generic import ListView, DetailView
 from .models import Order, OrderItem, ShippingAddress
 from django.contrib.auth.decorators import login_required
 from .forms import ShippingForm
 from .serializers import OrderSerializer
+from django.core.mail import EmailMessage
+from .utils import generate_pdf_order
+
+
+def send_order_confirmation(order):
+    subject = f"You order #{order.pk} Confirmation"
+    body = (
+        f"Hi {order.user.username},\n\n"
+        f"Thank you for your order #{order.pk}! "
+        f"Please find attached your order confirmation.\n\n"
+        "Best regards,\n"
+        "Online Store Team"
+    )
+    pdf_data = generate_pdf_order(order)
+    email = EmailMessage(
+        subject=subject,
+        body=body,
+        from_email=None,
+        to=[order.user.email]
+    )
+
+    email.attach(f"order_{order.pk}.pdf", pdf_data)
+    email.send(fail_silently=False)
 
 
 class CheckoutView(LoginRequiredMixin, View):
@@ -20,7 +42,7 @@ class CheckoutView(LoginRequiredMixin, View):
         cart_items = CartItem.objects.filter(cart__user=request.user).select_related('product')
 
         # 2) Підтягуємо існуючу адресу (якщо була) або None
-        order, _ = Order.objects.get_or_create(user=request.user, status='PENDING')
+        order, _ = Order.objects.get_or_create(user=request.user, status="PENDING")
         try:
             address = order.shipping_address
         except ShippingAddress.DoesNotExist:
@@ -75,11 +97,13 @@ class CheckoutView(LoginRequiredMixin, View):
 
         # зберігаємо загальну суму
         order.total_price = total
-        order.save(update_fields=['total_price'])
+        order.status = "PAID"
+        order.save(update_fields=['total_price', 'status'])
 
         # тепер чистимо кошик
         cart_items.delete()
 
+        send_order_confirmation(order)
         return redirect('order-success', pk=order.pk)
 
 

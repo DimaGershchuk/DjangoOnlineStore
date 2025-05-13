@@ -36,6 +36,9 @@
           </div>
 
           <nav class="navbar-main">
+              {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">Welcome, {{ user.username }}</a>
+              {% endif %}
             <a href="{% url 'home-page' %}">Products</a>
             <a href="#">Information</a>
               <a href="{% url 'register' %}">Register</a>
