@@ -10,6 +10,8 @@ from .serializers import ProductSerializers, ReviewSerializers
 from .filters import ProductFilter
 from .pagination import ProductPageNumberPagination
 from .forms import ReviewForm
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 def home_view(request):
@@ -17,6 +19,7 @@ def home_view(request):
     return render(request, 'home-page.html', {'categories': categories})
 
 
+# @method_decorator(cache_page(60 * 15, key_prefix='product-list'), name='dispatch')
 class ProductListView(ListView):
     model = ProductProxy
     template_name = 'products/product-list.html'

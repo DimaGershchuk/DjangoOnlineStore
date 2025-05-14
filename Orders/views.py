@@ -10,6 +10,7 @@ from .forms import ShippingForm
 from .serializers import OrderSerializer
 from django.core.mail import EmailMessage
 from .utils import generate_pdf_order
+from django.conf import settings
 
 
 def send_order_confirmation(order):
@@ -22,11 +23,16 @@ def send_order_confirmation(order):
         "Online Store Team"
     )
     pdf_data = generate_pdf_order(order)
+    recipient = order.user.email
+
+    if not recipient:
+        return False
+
     email = EmailMessage(
         subject=subject,
         body=body,
-        from_email=None,
-        to=[order.user.email]
+        from_email=settings.EMAIL_HOST_USER,
+        to=[recipient]
     )
 
     email.attach(f"order_{order.pk}.pdf", pdf_data)
