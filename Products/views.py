@@ -24,7 +24,7 @@ class ProductListView(ListView):
     model = ProductProxy
     template_name = 'products/product-list.html'
     context_object_name = 'products'
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         qs = super().get_queryset().select_related('category', 'brand')
