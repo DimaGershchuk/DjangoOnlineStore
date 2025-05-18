@@ -12,21 +12,19 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 import mimetypes
+import os
+from DjangoOnlineStore.env import BASE_DIR, env
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
+env.read_env(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-34@94tijct_$@y_+5$%y(w0c4=gjtkbpc+b1%6k#66==_g(%vu'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -92,8 +90,12 @@ WSGI_APPLICATION = 'DjangoOnlineStore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE':   'django.db.backends.postgresql',
+        'NAME':     env('POSTGRES_DB'),
+        'USER':     env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST':     env('POSTGRES_HOST', default='localhost'),
+        'PORT':     env('POSTGRES_PORT', default='5432'),
     }
 }
 
@@ -122,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 
 AUTH_USER_MODEL = 'Users.CustomUser'
@@ -208,8 +209,8 @@ SIMPLE_JWT = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'dasidopasdasdadasjak'
-EMAIL_HOST_PASSWORD = '213dsadadolasdkjl;ask'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
+EMAIL_PORT = env.int('EMAIL_PORT', default=587)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
