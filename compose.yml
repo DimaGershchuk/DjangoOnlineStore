@@ -1,0 +1,43 @@
+
+services:
+  psql:
+    image: postgres:17-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - djangoStoreNet
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - psql
+    networks:
+      - djangoStoreNet
+
+  web:
+    build: .
+    image: onlinestore
+    command: "python manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - psql
+    volumes:
+      - ./:/app
+    networks:
+      - djangoStoreNet
+
+volumes:
+  postgres-data:
+
+networks:
+  djangoStoreNet:
+    driver: bridge
