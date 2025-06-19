@@ -48,6 +48,7 @@ class UserPasswordChange(PasswordChangeView):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'users/profile.html'
+    login_url = 'login'
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

@@ -10,6 +10,8 @@ from django.db.models import Prefetch
 
 
 class CartDetailView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request):
         cart, _ = Cart.objects.get_or_create(user=request.user)
         cart_items = cart.items.select_related('product').all() # Витягую всі товари, які в корзині
@@ -17,6 +19,8 @@ class CartDetailView(LoginRequiredMixin, View):
 
 
 class CartAddItemView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def post(self, request, product_id):
         cart, _ = Cart.objects.get_or_create(user=request.user)
         product = get_object_or_404(Product, id=product_id)
@@ -28,6 +32,8 @@ class CartAddItemView(LoginRequiredMixin, View):
 
 
 class CartRemoveItemView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def post(self, request, item_id):
         cart = request.user.cart
         item = get_object_or_404(CartItem, id=item_id, cart=cart)
@@ -37,6 +43,8 @@ class CartRemoveItemView(LoginRequiredMixin, View):
 
 
 class WishListDetailView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request):
         wishlist, _ = WishList.objects.prefetch_related(Prefetch('products', queryset=Product.objects.select_related('category', 'brand'))).get_or_create(user=request.user) # Витягую всі товари для wishlist одни запитом через prefetch, тому що зв`язок M2M
         products = wishlist.products.all()
