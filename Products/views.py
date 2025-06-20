@@ -4,7 +4,7 @@ from django.views.generic.edit import FormMixin
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from django.views.generic import ListView, DetailView
-from django.db.models import Q
+from django.db.models import Q, Avg
 from .models import ProductProxy, Category, Review
 from .serializers import ProductSerializers, ReviewSerializers
 from .filters import ProductFilter
@@ -83,6 +83,11 @@ class ProductDetailView(FormMixin, DetailView):
             reviews.product = self.object
             reviews.user = request.user
             reviews.save()
+
+            avg = self.object.reviews.aggregate(avg=Avg('rating'))['avg']
+            self.object.avarage_rating = avg
+            self.object.save(update_fields=['average_rating'])
+
             return redirect(self.get_success_url())
         return self.form_invalid(form)
 
