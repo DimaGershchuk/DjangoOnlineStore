@@ -60,7 +60,7 @@
                             {% endfor %}
                         </div>
                             {% endfor %}
-                      <button type="submit" class="btn-send-review">Submit review</button>
+                      <button type="submit" class="register-btn">Submit review</button>
                     </form>
             </div>
         </div>
@@ -77,12 +77,7 @@
                             <strong>{{review.user.username}}</strong>
                         </div>
                         <div class="review-rating">
-                            {% for i in "12345"|slice:":review.rating"|make_list %}
-                                ★
-                            {% endfor %}
-                            {% for i in "12345"|slice:"review.rating:"|make_list %}
-                                ☆
-                            {% endfor %}
+                            {{ review.rating }}★
                         </div>
                         <p class="review-comment">
                             {{review.comment}}
