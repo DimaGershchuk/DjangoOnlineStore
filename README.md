@@ -21,9 +21,9 @@ Environment Setup
 
 1. Create a .env file in the root directory with the following variables:
 
-POSTGRES_USER=admin
-POSTGRES_PASSWORD=admin123
-POSTGRES_DB=onlinestore_db
+- POSTGRES_USER=admin
+- POSTGRES_PASSWORD=admin123
+- POSTGRES_DB=onlinestore_db
 
 2. Make sure Docker and Docker Compose are installed on your system.
 
@@ -55,10 +55,10 @@ Database: onlinestore_db
 3. Click Login to access and manage your database.
 
 Docker Services
-Service	Description	Port
-web	Django web application	8000
-psql	PostgreSQL database	5432
-adminer	Database management interface	8080
+
+- web	Django web application	8000
+- psql	PostgreSQL database	5432
+- adminer	Database management interface	8080
 
 Useful Commands
 
