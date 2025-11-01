@@ -54,7 +54,7 @@ Database: onlinestore_db
 
 3. Click Login to access and manage your database.
 
-🧱 Docker Services
+Docker Services
 Service	Description	Port
 web	Django web application	8000
 psql	PostgreSQL database	5432
@@ -64,23 +64,23 @@ Useful Commands
 
 Run Django migrations:
 
-docker compose exec web python manage.py migrate
+- docker compose exec web python manage.py migrate
 
 Create a Django superuser:
 
-docker compose exec web python manage.py createsuperuser
+- docker compose exec web python manage.py createsuperuser
 
 Access Django container shell:
 
-docker compose exec web bash
+- docker compose exec web bash
 
 Stop containers:
 
-docker compose down
+- docker compose down
 
 Remove containers and volumes:
 
-docker compose down -v
+- docker compose down -v
 
 
 
